@@ -5,7 +5,7 @@ import QtQuick.Controls 2.15
 
 import App 1.0
 
-Window {
+ApplicationWindow {
     id: root
 
     width: 655

@@ -6,7 +6,7 @@ import QtGraphicalEffects 1.15
 
 import App 1.0
 
-Window {
+ApplicationWindow {
     width: 800
     height: 600
     visible: true

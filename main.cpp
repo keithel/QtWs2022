@@ -53,7 +53,10 @@ int main(int argc, char* argv[]) {
     ServiceManager::getInstance().setResourceService(resourceService);            // Register service to our C++ singleton
     engine.rootContext()->setContextProperty("resourceService", resourceService); // Also set it to QML root context
 
-    const QUrl url(QStringLiteral("qrc:/main.qml"));
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+    const QUrl url(QStringLiteral(
+        "qrc:/main5.qml"
+        ));
     QObject::connect(
         &engine,
         &QQmlApplicationEngine::objectCreated,
@@ -64,6 +67,18 @@ int main(int argc, char* argv[]) {
         },
         Qt::QueuedConnection);
     engine.load(url);
+#else
+    const QUrl url(QStringLiteral(
+        "qrc:/qt/qml/com/example/QtWs2022/Main6.qml"
+        ));
+    QObject::connect(
+        &engine,
+        &QQmlApplicationEngine::objectCreationFailed,
+        &app,
+        []() { QCoreApplication::exit(-1); },
+        Qt::QueuedConnection);
+    engine.loadFromModule("com/example/QtWs2022", "Main6");
+#endif
 
     return QGuiApplication::exec();
 }
